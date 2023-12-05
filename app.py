@@ -10,6 +10,7 @@ ca_cert_path = "/etc/ssl/certs/ca-certificates.crt"
 
 # Configuración de la conexión
 ssl_context = ssl.create_default_context(cafile=ca_cert_path)
+print(ssl_context)
 config = {
     "host": db_host,
     "user": db_username,
