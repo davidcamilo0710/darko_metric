@@ -6,7 +6,7 @@ db_host = "aws.connect.psdb.cloud"
 db_username = "don13ns8ywrna64tfkzm"
 db_password = "pscale_pw_sNqDzzeyfMs8C81DTn14seWpJ3fH8Ha6i3845yvsyGS"
 db_name = "darko"
-ca_cert_path = "C:/Users/david/Downloads/cacert.pem"
+ca_cert_path = "/etc/ssl/certs/ca-certificates.crt"
 
 # Configuración de la conexión
 ssl_context = ssl.create_default_context(cafile=ca_cert_path)
