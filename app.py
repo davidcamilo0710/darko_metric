@@ -1,6 +1,6 @@
 import pymysql.cursors
 import ssl
-
+import os
 # Parámetros de conexión
 db_host = "aws.connect.psdb.cloud"
 db_username = "don13ns8ywrna64tfkzm"
