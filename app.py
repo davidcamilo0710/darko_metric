@@ -7,10 +7,12 @@ db_username = "don13ns8ywrna64tfkzm"
 db_password = "pscale_pw_sNqDzzeyfMs8C81DTn14seWpJ3fH8Ha6i3845yvsyGS"
 db_name = "darko"
 ca_cert_path = "/etc/ssl/certs/ca-certificates.crt"
-
+if os.path.exists(ca_cert_path):
+    print("El certificado se encuentra en la ruta: {}".format(ca_cert_path))
+else:
+    print("El certificado NO se encuentra en la ruta: {}".format(ca_cert_path))
 # Configuración de la conexión
 ssl_context = ssl.create_default_context(cafile=ca_cert_path)
-print(ssl_context)
 config = {
     "host": db_host,
     "user": db_username,
