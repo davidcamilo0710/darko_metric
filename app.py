@@ -2,10 +2,10 @@ import pymysql.cursors
 import ssl
 import os
 # Parámetros de conexión
-db_host = "aws.connect.psdb.cloud"
-db_username = "don13ns8ywrna64tfkzm"
-db_password = "pscale_pw_sNqDzzeyfMs8C81DTn14seWpJ3fH8Ha6i3845yvsyGS"
-db_name = "darko"
+db_host = os.environ["DB_HOST"]
+db_username = os.environ["DB_USERNAME"]
+db_password = os.environ["DB_PASSWORD"]
+db_name = os.environ["DB_NAME"]
 ca_cert_path = "./cacert.pem"
 if os.path.exists(ca_cert_path):
     print("El certificado se encuentra en la ruta: {}".format(ca_cert_path))
