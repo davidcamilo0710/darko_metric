@@ -1,17 +1,21 @@
-from dotenv import load_dotenv
-load_dotenv()
 import os
 import MySQLdb
 
+# Parámetros de conexión
+db_host = os.environ["DB_HOST"]
+db_username = os.environ["DB_USERNAME"]
+db_password = os.environ["DB_PASSWORD"]
+db_name = os.environ["DB_NAME"]
+
 connection = MySQLdb.connect(
-  host= os.getenv("DB_HOST"),
-  user=os.getenv("DB_USERNAME"),
-  passwd= os.getenv("DB_PASSWORD"),
-  db= os.getenv("DB_NAME"),
+  host= db_host,
+  user= db_username,
+  passwd= db_password,
+  db= db_name,
   autocommit = True,
   ssl_mode = "VERIFY_IDENTITY",
   ssl      = {
-    "ca": "/etc/ssl/cert.pem"
+    "ca": "/etc/ssl/certs/ca-certificates.crt"
   }
 )
   
