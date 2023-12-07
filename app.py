@@ -19,7 +19,7 @@ try:
         "ca": "/etc/ssl/certs/ca-certificates.crt"
     }
   )
-  if connection.is_connected():
+  if connection:
       print("Conexión exitosa a la base de datos")
   else:
       print("No se pudo establecer la conexión a la base de datos")
