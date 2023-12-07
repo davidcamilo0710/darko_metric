@@ -21,11 +21,21 @@ try:
   )
   if connection:
       print("Conexión exitosa a la base de datos")
+      cursor = connection.cursor()
+      cursor.execute("SHOW TABLES;")
+      tables = cursor.fetchall()
+      if tables:
+        print("Nombres de las tablas:")
+        for table in tables:
+          print(table[0])
+      else:
+        print("No hay tablas en la base de datos.")
   else:
       print("No se pudo establecer la conexión a la base de datos")
 except Exception as e:
   print("Error de conexión: {}".format(e))
 finally:
   if connection:
+    cursor.close()
     connection.close()
     print("Conexión cerrada")
