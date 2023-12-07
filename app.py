@@ -9,17 +9,23 @@ db_name = os.environ["DB_NAME"]
 
 try:
   connection = MySQLdb.connect(
-    host= db_host,
-    user= db_username,
-    passwd= db_password,
-    db= db_name,
-    autocommit = True,
-    ssl_mode = "VERIFY_IDENTITY",
-    ssl      = {
-      "ca": "/etc/ssl/certs/ca-certificates.crt"
+    host=db_host,
+    user=db_username,
+    passwd=db_password,
+    db=db_name,
+    autocommit=True,
+    ssl_mode="VERIFY_IDENTITY",
+    ssl={
+        "ca": "/etc/ssl/certs/ca-certificates.crt"
     }
   )
+  if connection.is_connected():
+      print("Conexión exitosa a la base de datos")
+  else:
+      print("No se pudo establecer la conexión a la base de datos")
 except Exception as e:
   print("Error de conexión: {}".format(e))
 finally:
-  print("close")
+  if connection:
+    connection.close()
+    print("Conexión cerrada")
