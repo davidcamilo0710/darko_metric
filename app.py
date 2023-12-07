@@ -21,6 +21,7 @@ config = {
     "user": db_username,
     "password": db_password,
     "database": db_name,
+    "port": 3306,
     "ssl_ca": ca_cert_path,
 }
 
