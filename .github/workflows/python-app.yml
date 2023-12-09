@@ -29,6 +29,7 @@ jobs:
     - name: Set up Chromedriver
       run: |
         pip install chromedriver-autoinstaller
+        export PATH=$PATH:~/.local/bin  # Asegura que el directorio de instalación de pip esté en el PATH
         chromedriver-autoinstaller
     
         # Print Chromedriver version
