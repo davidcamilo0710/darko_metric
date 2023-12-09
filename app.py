@@ -2,11 +2,13 @@ import os
 import MySQLdb
 
 # Parámetros de conexión
+chromedriver_path = os.environ["CHROMEDRIVER_DIR"]
 db_host = os.environ["DB_HOST"]
 db_username = os.environ["DB_USERNAME"]
 db_password = os.environ["DB_PASSWORD"]
 db_name = os.environ["DB_NAME"]
 
+print(chromedriver_path)
 try:
   connection = MySQLdb.connect(
     host=db_host,
