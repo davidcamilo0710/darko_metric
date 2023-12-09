@@ -32,7 +32,7 @@ jobs:
         CHROMEDRIVER_VERSION=$(echo $CHROME_VERSION | cut -d'.' -f1)
         CHROMEDRIVER_VERSION="${CHROMEDRIVER_VERSION}.0.0.0"
     
-        CHROMEDRIVER_DIR="/chromedriver"
+        CHROMEDRIVER_DIR="./chromedriver"
         mkdir $CHROMEDRIVER_DIR
     
         # Download and install Chromedriver
