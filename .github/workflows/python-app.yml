@@ -24,13 +24,19 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        CHROME_VERSION="google-chrome-stable_116.0.5845.187-1_amd64.deb"
-        wget https://dl.google.com/linux/direct/$CHROME_VERSION
-        sudo dpkg -i $CHROME_VERSION
-        sudo apt-get install -f
-        rm $CHROME_VERSION
         pip install mysqlclient
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+        
+        apt-get update && \
+        apt-get install -y gnupg wget curl unzip --no-install-recommends && \
+        wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - && \
+        echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list && \
+        apt-get update -y && \
+        apt-get install -y google-chrome-stable && \
+        CHROME_VERSION=$(google-chrome --product-version | grep -o "[^\.]*\.[^\.]*\.[^\.]*") && \
+        CHROMEDRIVER_VERSION=$(curl -s "https://chromedriver.storage.googleapis.com/LATEST_RELEASE_$CHROME_VERSION") && \
+        wget -q --continue -P /chromedriver "http://chromedriver.storage.googleapis.com/$CHROMEDRIVER_VERSION/chromedriver_linux64.zip" && \
+        unzip /chromedriver/chromedriver* -d /usr/local/bin/
     - name: Execute script
       env:
         DB_HOST: ${{ secrets.DB_HOST }}
