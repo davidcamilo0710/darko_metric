@@ -26,8 +26,22 @@ jobs:
         python -m pip install --upgrade pip
         pip install mysqlclient
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-    - name: Print Chrome version
-      run: google-chrome-stable --version    
+    - name: Set up Chromedriver
+      run: |
+        CHROME_VERSION=$(google-chrome-stable --version | awk '{print $3}')
+        CHROMEDRIVER_VERSION=$(echo $CHROME_VERSION | cut -d'.' -f1)
+        CHROMEDRIVER_VERSION="${CHROMEDRIVER_VERSION}.0.0.0"
+    
+        CHROMEDRIVER_DIR="/chromedriver"
+        mkdir $CHROMEDRIVER_DIR
+    
+        # Download and install Chromedriver
+        wget -q --continue -P $CHROMEDRIVER_DIR "http://chromedriver.storage.googleapis.com/$CHROMEDRIVER_VERSION/chromedriver_linux64.zip"
+        unzip $CHROMEDRIVER_DIR/chromedriver* -d $CHROMEDRIVER_DIR
+    
+        # Print Chromedriver version and path
+        chromedriver --version
+        echo "Chromedriver path: $CHROMEDRIVER_DIR"
     - name: Execute script
       env:
         DB_HOST: ${{ secrets.DB_HOST }}
