@@ -28,21 +28,11 @@ jobs:
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     - name: Set up Chromedriver
       run: |
-        CHROME_VERSION=$(google-chrome-stable --version | awk '{print $3}')
-        CHROMEDRIVER_VERSION=$(echo $CHROME_VERSION | cut -d'.' -f1)
-        CHROMEDRIVER_VERSION="${CHROMEDRIVER_VERSION}.0.0.0"
+        pip install chromedriver-autoinstaller
+        chromedriver-autoinstaller
     
-        CHROMEDRIVER_DIR="/chromedriver"
-        sudo mkdir $CHROMEDRIVER_DIR
-        sudo chmod 777 $CHROMEDRIVER_DIR  # Dar permisos de escritura a todos (ajusta según necesidades)
-    
-        # Download and install Chromedriver
-        sudo wget -q --continue -P $CHROMEDRIVER_DIR "http://chromedriver.storage.googleapis.com/$CHROMEDRIVER_VERSION/chromedriver_linux64.zip"
-        sudo unzip $CHROMEDRIVER_DIR/chromedriver* -d $CHROMEDRIVER_DIR
-    
-        # Print Chromedriver version and path
+        # Print Chromedriver version
         chromedriver --version
-        echo "Chromedriver path: $CHROMEDRIVER_DIR"
     - name: Execute script
       env:
         DB_HOST: ${{ secrets.DB_HOST }}
