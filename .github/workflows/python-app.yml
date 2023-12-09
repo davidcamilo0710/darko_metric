@@ -32,7 +32,7 @@ jobs:
         chromedriver --version
     - name: Execute script
       env:
-        CHROMEDRIVER_DIR: ${{ which chromedriver }}
+        CHROMEDRIVER_DIR: ${{ env.HOME }}/.chromedriver
         DB_HOST: ${{ secrets.DB_HOST }}
         DB_NAME: ${{ secrets.DB_NAME }}
         DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
