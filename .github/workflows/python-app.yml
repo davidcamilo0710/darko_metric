@@ -26,30 +26,8 @@ jobs:
         python -m pip install --upgrade pip
         pip install mysqlclient
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-    - name: Install Chrome and Chromedriver
-      run: |
-        sudo apt-get install -y wget xvfb unzip
-        sudo wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
-        echo "deb http://dl.google.com/linux/chrome/deb/ stable main" | sudo tee -a /etc/apt/sources.list.d/google.list
-        sudo apt-get update -y
-    
-        # Set up Chromedriver Environment variables and install chrome
-        CHROMEDRIVER_VERSION="114.0.5735.90"
-        CHROME_VERSION="114.0.5735.90-1"
-        sudo wget --no-verbose -O /tmp/chrome.deb "https://dl.google.com/linux/chrome/deb/pool/main/g/google-chrome-stable/google-chrome-stable_${CHROME_VERSION}_amd64.deb"
-        sudo apt install -y /tmp/chrome.deb
-        sudo rm /tmp/chrome.deb
-    
-        CHROMEDRIVER_DIR="/chromedriver"
-        sudo mkdir $CHROMEDRIVER_DIR
-    
-        # Download and install Chromedriver
-        sudo wget -q --continue -P $CHROMEDRIVER_DIR "http://chromedriver.storage.googleapis.com/$CHROMEDRIVER_VERSION/chromedriver_linux64.zip"
-        sudo unzip $CHROMEDRIVER_DIR/chromedriver* -d $CHROMEDRIVER_DIR
-    
-        # Put Chromedriver into the PATH
-        export PATH=$CHROMEDRIVER_DIR:$PATH    
-       
+    - name: Print Chrome version
+      run: google-chrome-stable --version    
     - name: Execute script
       env:
         DB_HOST: ${{ secrets.DB_HOST }}
