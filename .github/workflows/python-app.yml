@@ -26,20 +26,30 @@ jobs:
         python -m pip install --upgrade pip
         pip install mysqlclient
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-        
-        set -ex; \
-        apt-get update; \
-        apt-get install -y gnupg wget curl unzip --no-install-recommends; \
-        wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | \
-        gpg --no-default-keyring --keyring gnupg-ring:/etc/apt/trusted.gpg.d/google.gpg --import; \
-        chmod 644 /etc/apt/trusted.gpg.d/google.gpg; \
-        echo "deb https://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list; \
-        apt-get update -y; \
-        apt-get install -y google-chrome-stable; \
-        CHROME_VERSION=$(google-chrome --product-version | grep -o "[^\.]*\.[^\.]*\.[^\.]*"); \
-        CHROMEDRIVER_VERSION=$(curl -s "https://chromedriver.storage.googleapis.com/LATEST_RELEASE_$CHROME_VERSION"); \
-        wget -q --continue -P /chromedriver "https://chromedriver.storage.googleapis.com/$CHROMEDRIVER_VERSION/chromedriver_linux64.zip"; \
-        unzip /chromedriver/chromedriver* -d /usr/local/bin/
+    - name: Install Chrome and Chromedriver
+      run: |
+        apt-get install -y wget xvfb unzip
+        wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -
+        echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list
+        apt-get update -y
+
+        # Set up Chromedriver Environment variables and install chrome
+        CHROMEDRIVER_VERSION="114.0.5735.90"
+        CHROME_VERSION="114.0.5735.90-1"
+        wget --no-verbose -O /tmp/chrome.deb "https://dl.google.com/linux/chrome/deb/pool/main/g/google-chrome-stable/google-chrome-stable_${CHROME_VERSION}_amd64.deb"
+        apt install -y /tmp/chrome.deb
+        rm /tmp/chrome.deb
+
+        CHROMEDRIVER_DIR="/chromedriver"
+        mkdir $CHROMEDRIVER_DIR
+
+        # Download and install Chromedriver
+        wget -q --continue -P $CHROMEDRIVER_DIR "http://chromedriver.storage.googleapis.com/$CHROMEDRIVER_VERSION/chromedriver_linux64.zip"
+        unzip $CHROMEDRIVER_DIR/chromedriver* -d $CHROMEDRIVER_DIR
+
+        # Put Chromedriver into the PATH
+        export PATH=$CHROMEDRIVER_DIR:$PATH        
+       
     - name: Execute script
       env:
         DB_HOST: ${{ secrets.DB_HOST }}
