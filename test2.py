@@ -22,19 +22,7 @@ try:
     df = pd.read_csv(StringIO(csv_data))
     # Imprimir información básica sobre el DataFrame
     print("Información general:")
-    print(df.info())
-    
-    # Imprimir nombres de columnas
-    print("\nNombres de columnas:")
-    print(df.columns.tolist())
-    
-    # Imprimir tipos de datos de cada columna
-    print("\nTipos de datos de columnas:")
-    print(df.dtypes)
-    
-    # Imprimir estadísticas descriptivas para columnas numéricas
-    print("\nEstadísticas descriptivas para columnas numéricas:")
-    print(df.describe())
+    print(df.head(5))
 finally:
     # Cierra el navegador al finalizar
     driver.quit()
