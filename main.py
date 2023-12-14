@@ -22,11 +22,11 @@ db_manager.test_connection()
 max_projection_date = db_manager.get_max_projection_date()
 
 # Insertar datos de prueba (puedes definir tus propios datos aquí)
+max_projection_date = "2023-01-01"
+
 player_stats = (
     1, "Jugador1", 1, "Equipo1", "Experiencia1", 30.5, 100.0, 20.5, 5.5, 8.0,
     2.5, 1.0, 1.5, 2.0, 15.0, 10.0, 5.0, 7.0, 3.0, 4.0, max_projection_date
 )
-db_manager.insert_player_stats(player_stats)
-
 # Cerrar la conexión
 db_manager.close_connection()
