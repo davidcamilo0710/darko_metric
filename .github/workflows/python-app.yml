@@ -43,4 +43,4 @@ jobs:
         BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
         TELEGRAM_CHANEL_ID: ${{ secrets.TELEGRAM_CHANEL_ID }}
       run: |
-          python bot.py
+          python main.py
