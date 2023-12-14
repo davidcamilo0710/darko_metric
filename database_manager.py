@@ -1,6 +1,7 @@
 import os
 import requests
 import MySQLdb
+from datetime import date
 
 class DatabaseManager:
     def __init__(self, host, username, password, db_name, ssl_ca_path, token, chat_id):
