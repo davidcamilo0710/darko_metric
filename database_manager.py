@@ -61,7 +61,6 @@ class DatabaseManager:
     def insert_player_stats(self, player_stats):
         if self.cursor:
             try:
-                player_stats[-1] = date(*map(int, player_stats[-1].split('-')))
                 query = """
                     INSERT INTO darko_player_stats 
                     (player_id, player_name, team_id, team_name, experience, minutes, pace, points, assists, defensive_rebounds, 
