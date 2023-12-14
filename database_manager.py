@@ -11,6 +11,8 @@ class DatabaseManager:
         self.ssl_ca_path = ssl_ca_path
         self.connection = None
         self.cursor = None
+        self.token = token
+        self.chat_id = chat_id
 
     def connect(self):
         try:
@@ -36,10 +38,10 @@ class DatabaseManager:
             print("Conexión a la base de datos establecida.")
         else:
             texto_mensaje = "No hay conexión a la base de datos Darko."
-            url = f"https://api.telegram.org/bot{token}/sendMessage"
+            url = f"https://api.telegram.org/bot{self.token}/sendMessage"
             print(texto_mensaje)
             params = {
-                'chat_id': chat_id,
+                'chat_id': self.chat_id,
                 'text': texto_mensaje
             }
             response = requests.post(url, params=params)
